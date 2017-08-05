@@ -1,0 +1,23 @@
+{
+    "name": "r0di0n0v/yii2-ora-jobs-widget",
+    "description": "Yii 2 widget, based on d3 chart library, displays a timeline for the execution of tasks in the Oracle database.",
+    "keywords": [
+        "yii2",
+        "extension",
+        "widget",
+        "grid",
+        "d3js",
+        "oracle"
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-4": {
+            "r0di0n0v\\orajobs\\": ""
+        }
+    }
+}

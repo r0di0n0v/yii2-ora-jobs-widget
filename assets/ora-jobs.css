@@ -1,0 +1,40 @@
+.brush .extent {
+    stroke: gray;
+    fill: dodgerblue;
+    fill-opacity: .365;
+}
+
+g > line {
+    stroke: lightgray;
+    stroke-opacity: 0.6;
+    shape-rendering: crispEdges;
+}
+
+path.domain {
+    display: none;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    padding: 5px;
+    box-shadow: rgb(0, 0, 0) 0px 0px 5px;
+}
+
+.fail {
+    fill: #e91c63;
+    /*fill-opacity: .7;*/
+    /*stroke-width: 6;*/
+}
+.success {
+    fill: #8bc34a;
+    /*fill-opacity: .7;*/
+    /*stroke-width: 6;*/
+}
+.running {
+    fill: #03a9f4;
+}
+
+.laneText {
+    font-size: 10px;
+}
