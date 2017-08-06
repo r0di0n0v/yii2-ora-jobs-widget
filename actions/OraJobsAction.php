@@ -82,8 +82,8 @@ SQL;
             }
             $data['rows'][] = [
                 'id'=> $map_label_to_id[ $res[$i]['JOB_NAME'] ],
-                's' => $res[$i]['S'],
-                'e' => $res[$i]['E'],
+                's' => $res[$i]['SDATE'],
+                'e' => $res[$i]['EDATE'],
                 'res' => ($res[$i]['ERR'] == 1 ? 'err' : 'suc' )
             ];
 

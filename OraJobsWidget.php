@@ -27,7 +27,7 @@ class OraJobsWidget extends Widget
         OraJobsAsset::register( $view );
         $view->registerJs("new Chart({selector:'.". $this->uid ."', url:'". $this->url ."'})");
 
-        return Html::tag('div', 'lol', [
+        return Html::tag('div', '', [
             'class' => "ora-jobs ".$this->uid
         ]);
     }
