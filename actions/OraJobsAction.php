@@ -84,7 +84,7 @@ SQL;
                 'id'=> $map_label_to_id[ $res[$i]['JOB_NAME'] ],
                 's' => $res[$i]['SDATE'],
                 'e' => $res[$i]['EDATE'],
-                'res' => ($res[$i]['ERR'] == 1 ? 'err' : 'suc' )
+                'res' => ($res[$i]['ERR'] == 1 ? 'fail' : 'success' )
             ];
 
         }
