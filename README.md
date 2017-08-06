@@ -6,7 +6,7 @@
 ### Quick Start
 View
 ```
-use rodionov\orajobs\OraJobsWidget;
+use r0di0n0v\orajobs\OraJobsWidget;
 echo OraJobsWidget::widget([
     'url' => Url::to(['ora_jobs/get_jobs'])
 ]);
@@ -22,7 +22,7 @@ class Ora_jobsController extends Controller
             'get_jobs' => [
                 'class' => oraJobsAction::classname(),
                 'owners' => ['ORACLE_SCHEME_OWNER'],
-                'start_date' => new \DateTime(),
+                'start_date' => new \DateTime('-2 day'),
                 'end_date' => new \DateTime(),
             ]
         ]

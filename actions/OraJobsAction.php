@@ -67,7 +67,7 @@ SQL;
         }
         $sql = str_replace(':OWNER', implode(',', $param_owner_bind_keys), $sql);
 
-        $res = \Yii::$app->db->createCommand($sql, $params);
+        $res = \Yii::$app->db->createCommand($sql, $params)->queryAll();
 
         $len = count($res);
         $data = ['labels' => [], 'rows' => []];

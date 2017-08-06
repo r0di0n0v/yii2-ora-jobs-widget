@@ -1,13 +1,17 @@
 Jobs Timeline Widget for Oracle Change Log
 ===========================================
 
-Version 0.2 under development
+Version 0.3 under development
 -----------------------------
 
 - Chg more configuration parameters
 - New information about running jobs
 - New realtime update data
 
+Version 0.2
+-----------------------------
+- Fix fetch rows in action
+- Fix class path in Readme file
 
 Version 0.1
 -----------------------------
