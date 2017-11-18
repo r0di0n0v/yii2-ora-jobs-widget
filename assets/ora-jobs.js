@@ -27,6 +27,15 @@ var Chart = function (options) {
     this.PADDING_LEFT = 200
     this.PADDING_RIGHT = 20
 
+    /**
+     * Минимальная ширина элемента графика
+     * @type {number}
+     */
+    this.MIN_BAR_WIDTH = null
+    if (parseFloat(options.min_bar_width) > 0) {
+        this.MIN_BAR_WIDTH = parseFloat(options.min_bar_width)
+    }
+
     this.width = options.width || 1160
 
     this._getChartData();
@@ -58,6 +67,8 @@ Chart.prototype._getChartData = function () {
 }
 
 Chart.prototype._drawChart = function (tag, labels, items) {
+    var MIN_BAR_WIDTH = this.MIN_BAR_WIDTH
+
     var dataLen = labels.length
 
     for (var key in items) {
@@ -249,7 +260,13 @@ Chart.prototype._drawChart = function (tag, labels, items) {
                 return x1(d.s);
             })
             .attr("width", function (d) {
-                return x1(d.e) - x1(d.s);
+                let w = x1(d.e) - x1(d.s);
+                if (MIN_BAR_WIDTH) {
+                    if (w < MIN_BAR_WIDTH) {
+                        w = MIN_BAR_WIDTH
+                    }
+                }
+                return w;
             });
 
         rects.enter().append("rect")
@@ -263,7 +280,13 @@ Chart.prototype._drawChart = function (tag, labels, items) {
                 return y1(d.id);
             })
             .attr("width", function (d) {
-                return x1(d.e) - x1(d.s);
+                let w = x1(d.e) - x1(d.s);
+                if (MIN_BAR_WIDTH) {
+                    if (w < MIN_BAR_WIDTH) {
+                        w = MIN_BAR_WIDTH
+                    }
+                }
+                return w;
             })
             .attr("height", function (d) {
                 return .8 * y1(1);

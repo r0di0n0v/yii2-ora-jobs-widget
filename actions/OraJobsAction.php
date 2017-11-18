@@ -5,7 +5,7 @@ namespace r0di0n0v\orajobs\actions;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
 
-class oraJobsAction extends Action
+class OraJobsAction extends Action
 {
 
     public $start_date;
