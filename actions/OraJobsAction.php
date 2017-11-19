@@ -43,7 +43,7 @@ SELECT
     sj.JOB_NAME,
     (CAST(SYS_EXTRACT_UTC(sjd.ACTUAL_START_DATE) AS DATE) - to_date('01011970', 'DDMMYYYY'))*24*60*60*1000 SDATE,
     (CAST(SYS_EXTRACT_UTC(sjd.ACTUAL_START_DATE + sjd.RUN_DURATION) AS DATE) - to_date('01011970', 'DDMMYYYY'))*24*60*60*1000 EDATE,
-    case when sjd.ERRORS is not null then 1 else 0 end ERR
+    case when sjd.ERRORS is not null then 'ERR' else 'SUC' end ERR
 FROM
     all_scheduler_job_run_details sjd,
     all_scheduler_jobs sj
@@ -53,7 +53,22 @@ WHERE 1=1
     AND sj.owner in (:OWNER)
     and sj.ENABLED = 'TRUE'
     AND sjd.ACTUAL_START_DATE >= TO_DATE(:SDATE, 'DD.MM.YYYY HH24:MI:SS')
-    AND sjd.ACTUAL_START_DATE < TO_DATE(:EDATE, 'DD.MM.YYYY HH24:MI:SS')
+    AND sjd.ACTUAL_START_DATE < TO_DATE(:EDATE, 'DD.MM.YYYY HH24:MI:SS')    
+union all
+SELECT
+    sj.owner,
+    sj.JOB_NAME,
+    (CAST(SYS_EXTRACT_UTC(sj.LAST_START_DATE) AS DATE) - to_date('01011970', 'DDMMYYYY'))*24*60*60*1000 SDATE,
+    (CAST(SYS_EXTRACT_UTC(SYSTIMESTAMP) AS DATE) - to_date('01011970', 'DDMMYYYY'))*24*60*60*1000 EDATE,
+    'RUN' ERR
+FROM
+    all_scheduler_jobs sj
+WHERE 1=1
+    AND sj.owner in (:OWNER)
+    and sj.ENABLED = 'TRUE'
+    AND sj.LAST_START_DATE >= TO_DATE(:SDATE, 'DD.MM.YYYY HH24:MI:SS')
+    AND sj.LAST_START_DATE < TO_DATE(:EDATE, 'DD.MM.YYYY HH24:MI:SS')
+    AND SJ.LAST_RUN_DURATION is null
 SQL;
         $params = [
             ':SDATE' => $this->start_date->format('d.m.Y H:i:s'),
@@ -84,7 +99,7 @@ SQL;
                 'id'=> $map_label_to_id[ $res[$i]['JOB_NAME'] ],
                 's' => $res[$i]['SDATE'],
                 'e' => $res[$i]['EDATE'],
-                'res' => ($res[$i]['ERR'] == 1 ? 'fail' : 'success' )
+                'res' => ($res[$i]['ERR'] == 'ERR' ? 'fail' : ($res[$i]['ERR'] == 'RUN' ? 'running' : 'success') )
             ];
 
         }
