@@ -56,7 +56,7 @@ Chart.prototype._getChartData = function () {
                 id: d['rows'][k].id,
                 s: new Date(parseInt(d['rows'][k].s)),
                 e: new Date(parseInt(d['rows'][k].e)),
-                res: d['rows'][k].res
+                status: d['rows'][k].status
             })
         }
 
@@ -178,7 +178,7 @@ Chart.prototype._drawChart = function (tag, labels, items) {
         .data(items)
         .enter().append("rect")
         .attr("class", function (d) {
-            return "miniItem" + d.id + _getResultClass(d.res);
+            return "miniItem" + d.id + _getResultClass(d.status);
         })
         .attr("x", function (d) {
             return xMiniScale(d.s);
@@ -246,7 +246,9 @@ Chart.prototype._drawChart = function (tag, labels, items) {
             minExtent = xMiniScale.invert(selection[0]),
             maxExtent = xMiniScale.invert(selection[1]),
             visItems = items.filter(function (d) {
-                return d.s < maxExtent && d.e > minExtent;
+                return (d.s < maxExtent && d.s > minExtent) ||
+                    (d.e < maxExtent && d.e > minExtent) ||
+                    (d.e > minExtent && d.s <= minExtent);
             });
 
         x1.domain([minExtent, maxExtent]);
@@ -260,7 +262,7 @@ Chart.prototype._drawChart = function (tag, labels, items) {
                 return x1(d.s);
             })
             .attr("width", function (d) {
-                let w = x1(d.e) - x1(d.s);
+                var w = x1(d.e) - x1(d.s);
                 if (MIN_BAR_WIDTH) {
                     if (w < MIN_BAR_WIDTH) {
                         w = MIN_BAR_WIDTH
@@ -271,7 +273,7 @@ Chart.prototype._drawChart = function (tag, labels, items) {
 
         rects.enter().append("rect")
             .attr("class", function (d) {
-                return "mainItem" + d.id + _getResultClass(d.res);
+                return "mainItem" + d.id + _getResultClass(d.status);
             })
             .attr("x", function (d) {
                 return x1(d.s);
@@ -280,7 +282,7 @@ Chart.prototype._drawChart = function (tag, labels, items) {
                 return y1(d.id);
             })
             .attr("width", function (d) {
-                let w = x1(d.e) - x1(d.s);
+                var w = x1(d.e) - x1(d.s);
                 if (MIN_BAR_WIDTH) {
                     if (w < MIN_BAR_WIDTH) {
                         w = MIN_BAR_WIDTH
@@ -314,12 +316,14 @@ Chart.prototype._drawChart = function (tag, labels, items) {
 
     function _getResultClass (result) {
         switch (result) {
-            case 'fail':
-                return ' fail'
-            case 'success':
+            case 'SUCCEEDED':
                 return ' success'
-            case 'run':
-                return ' running'
+            case 'FAILED':
+                return ' fail'
+            case 'STOPPED':
+                return ' stop'
+            case 'RUN':
+                return ' run'
             default:
                 return ''
         }

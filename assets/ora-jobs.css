@@ -31,8 +31,11 @@ path.domain {
     /*fill-opacity: .7;*/
     /*stroke-width: 6;*/
 }
-.running {
+.run {
     fill: #03a9f4;
+}
+.stop {
+    fill: #f48e00;
 }
 
 .laneText {
