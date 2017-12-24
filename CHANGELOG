@@ -1,12 +1,16 @@
 Jobs Timeline Widget for Oracle Change Log
 ===========================================
 
-Version 0.3 under development
+Version 0.4 under development
 -----------------------------
 
 - Chg more configuration parameters
-- New information about running jobs
 - New realtime update data
+
+Version 0.3
+-----------------------------
+- New information about running jobs
+- Minimal bar width parameter
 
 Version 0.2
 -----------------------------
